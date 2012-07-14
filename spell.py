@@ -1,0 +1,67 @@
+from util import Schema
+
+class Spell:
+    """
+    name
+    mana
+    damage
+    schema
+    optimal
+    type
+    expe
+    """
+
+    def __init__(self, **args):
+        self._data = {}
+        self._data['name'] = "base"
+        self._data['mana'] = 5
+        self._data['damage'] = 2
+        self._data['schema'] = Schema("aaa")
+        self._data['optimal'] = 600
+        self._data['type'] = 0
+        self._data['exp'] = 0
+        self._data['lvl'] = 0
+
+        for key in args:
+            self._data[key] = args[key]
+
+    def __getitem__(self, key):
+        return self._data[key]
+
+    def __setitem__(self, key, item):
+        self._data[key] = item
+
+    def launch(self, **ability):
+        if self['type'] == 1: # Fire
+            damage = self['damage'] + (self['damage'] * ability['fire'] / 100)
+        elif self['type'] == 2: # air
+            damage = self['damage'] + (self['damage'] * ability['air'] / 100)
+        elif self['type'] == 3: # earth
+            damage = self['damage'] + (self['damage'] * ability['earth'] / 100)
+        elif self['type'] == 4: # water
+            damage = self['damage'] + (self['damage'] * ability['water'] / 100)
+        elif self['type'] == 5: # ligthning
+            damage = self['damage'] + (self['damage'] * ability['light'] / 100)
+
+        malus = self['optimal'] / self['schema'].proceed()
+        damage = (self['damage'] * malus)
+        if (damage > self['damage']):
+            damage = self['damage']
+        
+        self['exp'] += 100 * malus           
+
+        return damage
+
+    def level_up(self):
+        """ is the spell level up?
+        """
+        if self['exp'] >= self['lvl'] * 1000:
+            self['exp'] -= self['lvl'] * 1000
+            self['lvl'] += 1
+            return True
+        else:
+            return False
+
+    
+    
+        

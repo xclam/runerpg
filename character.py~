@@ -1,0 +1,35 @@
+
+class Character:
+    _life
+    _mana
+    _strength
+    _intellect
+    _chance
+    _agility
+    _spells
+
+    def __init__(self, **args):
+        self._life = 60
+        self._mana = 20
+        self._strength = 0
+        self._intellect = 0
+        self._chance = 0
+        self._agility = 0
+        self._spells = []
+
+        for key in args:
+            self[key] = args[key]
+
+    def __repr__(self):
+        string = "Vie :"+self._life+" - Mana :"+self._mana
+        return string
+
+    def __str__(self):
+        return repr(self)
+
+    def get_damage(self,hit):
+        self._life -= hit
+
+    def attack(self,ennemy):
+        ennemy.get_damage()
+        

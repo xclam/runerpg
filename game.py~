@@ -1,0 +1,31 @@
+import curses
+
+def new_game():
+    stdscr.erase()
+    stdscr.addstr(1,0,"Nom :")
+    event = stdscr.getstr(2,0)
+
+
+
+stdscr = curses.initscr()
+curses.noecho()
+curses.cbreak()
+
+stdscr.keypad(1)
+
+stdscr.addstr(1,0,"Nouveau [n]")
+stdscr.addstr(2,0,"Charger [c]")
+while True:
+    event = stdscr.getch()
+    if event == ord("q"): break
+    elif event == ord("n"):
+        new_game()
+    elif event == ord("c"):
+        pass
+
+stdscr.keypad(0)
+curses.echo()
+curses.nocbreak()
+curses.endwin()
+
+
